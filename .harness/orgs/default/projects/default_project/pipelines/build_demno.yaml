@@ -27,7 +27,7 @@ pipeline:
               export PATH=$JAVA_HOME/bin:$PATH
               java -version
               cd ci-activation-app
-              mvn -B -DskipTests package
+              mvn -B -DskipTests -Dmaven.build.cache.skipCache=true package
         - id: testLinux
           name: Test on Linux
           run-test:
