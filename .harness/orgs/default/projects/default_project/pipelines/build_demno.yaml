@@ -20,13 +20,16 @@ pipeline:
           name: Build on Linux
           run:
             shell: bash
-            script: mvn -B -DskipTests package
+            script: |-
+              cd ci-activation-app
+              mvn -B -DskipTests package
         - id: testLinux
           name: Test on Linux
           run-test:
             shell: bash
             script: |-
               set -eu
+              cd ci-activation-app
               mvn -B test -Dmaven.build.cache.skipCache=true
               mvn -B jacoco:report || echo "JaCoCo is not configured; skipping coverage report generation."
             intelligence:
@@ -35,6 +38,8 @@ pipeline:
           name: Upload Coverage
           run:
             shell: bash
-            script: hcli cov upload
+            script: |-
+              cd ci-activation-app
+              hcli cov upload
             env:
               CI_ENABLE_HCLI_FOR_TESTS: "true"
