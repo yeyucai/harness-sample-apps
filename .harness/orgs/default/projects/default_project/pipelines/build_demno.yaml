@@ -41,12 +41,3 @@ pipeline:
               mvn -B jacoco:report || echo "JaCoCo is not configured; skipping coverage report generation."
             intelligence:
               disabled: true
-        - id: coverage
-          name: Upload Coverage
-          run:
-            shell: bash
-            script: |-
-              cd ci-activation-app
-              hcli cov upload
-            env:
-              CI_ENABLE_HCLI_FOR_TESTS: "true"
